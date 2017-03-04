@@ -20,7 +20,8 @@
         },
       computed: {
         progressHp() {
-          return Math.round(this.currentHp * 100 / this.maxHp) + '%';}
+          return Math.round(this.currentHp * 100 / this.maxHp) + '%';
+        }
       }
     }
 </script>

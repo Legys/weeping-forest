@@ -8,8 +8,8 @@
                          to='/home/rest'
                          tag='li'>Rest</router-link>
             <router-link class="gameframe__link"
-                         to='/home/battle'
-                         tag='li'>Battle</router-link>
+                         to='/home/road'
+                         tag='li'>Road</router-link>
             <router-link class="gameframe__link"
                          to='/home/inventory'
                          tag='li'>inventory</router-link>
