@@ -12,7 +12,14 @@
 <script>
 
     export default {
-    	props: ['maxHp', 'currentHp'],
+    	props: {
+    		maxHp: {
+    			type: Number
+            },
+            currentHp: {
+    			type: Number
+            }
+        },
     	data() {
     		return {
 
@@ -20,8 +27,14 @@
         },
       computed: {
         progressHp() {
-          return Math.round(this.currentHp * 100 / this.maxHp) + '%';
+          return (Math.round( 100 * this.currentHp) / this.maxHp) + '%';
         }
       }
     }
 </script>
+
+<style scoped>
+    .hero__progress--hp {
+        width: 100%;
+    }
+</style>

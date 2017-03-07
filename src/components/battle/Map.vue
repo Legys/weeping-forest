@@ -1,20 +1,19 @@
 <template>
-    <div class="map">
-        <h1>This is Map</h1>
-        <ul>
-            <router-link
+    <div class="map--component">
+        <div class="map">
+            <ul class="list">
+                <router-link
                         class="way"
-                         :to="{ path: 'road/battle:1' }"
-                        >1</router-link>
-            <router-link
-                        class="way"
-                         :to="{ path: 'road/battle:2' }"
-                        >2</router-link>
-            <router-link
-                         class="way"
-                         :to="{ path: 'road/battle:3' }"
-                        >3</router-link>
-        </ul>
+                        v-for="(n, i) in 3"
+                        :to="{path: `battle/${i}`, params: { id: i} }"
+                        :key="i"
+                        append
+
+                >{{ n }}</router-link>
+
+            </ul>
+        </div>
+
     </div>
 </template>
 
@@ -30,33 +29,55 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+
     .map {
+        position: relative;
         margin-left: 50px;
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-start;
         align-content: center;
+        background: blue;
+        min-width: 699px;
+        min-height: 560px;
+        background: url('../../../img/map.jpg') no-repeat;
+        background-size: contain;
+        border-radius: 5px;
+
+    }
+    .list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
     }
     .way {
         width: 50px;
         height: 50px;
-        background-color: red;
+        background-color: darkgrey;
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.8;
+        padding: 3px;
+        border-radius: 50%;
+        position: absolute;
+        text-align: center;
+        vertical-align: middle;
+
+        &:nth-child(1) {
+             top: 43px;
+             left: 176px;
+         }
+         &:nth-child(2) {
+              top: 97px;
+              left: 221px;
+         }
+         &:nth-child(3) {
+              top: 163px;
+              left: 238px;
+         }
 
     }
 
-   /* .battle__enemy-frame {
-        margin-left: 50px;
-        width: 300px;
-        min-height: 300px;
-        background: #065276;
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: flex-start;
-        align-items: center;
 
-    }
-    .enemy__image {
-        width: 90%;
-    }*/
 </style>

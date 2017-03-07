@@ -46,14 +46,15 @@ export default {
     margin-right: 35px;
   }*/
   header {
-    background: #065276;
+    /*background: #065276;*/
+    background: #00254c;
     margin-bottom: 35px;
   }
   .gameframe__screen {
 
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
   }
   .gameframe__nav {
     list-style: none;

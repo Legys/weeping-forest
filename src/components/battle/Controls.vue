@@ -11,11 +11,13 @@
         methods: {
         	attack() {
         		let damage = this.$store.getters.hero.damage;
-        		let enemy = this.$store.getters.enemy;
-                enemy[0].hp -= damage;
-                this.$store.commit('ATTACK', damage);
-
-                console.log('Spider', this.$store.getters.enemy[0].hp)
+        		let enemy = {
+                  ...this.$store.getters.enemy
+                }
+                enemy.currentHp -= damage;
+        		console.log(enemy);
+                /*this.$store.dispatch('attack', damage);*/
+//                console.log(enemy.name, enemy.currentHp);
 
             }
         }

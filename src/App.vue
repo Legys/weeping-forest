@@ -23,7 +23,8 @@ export default {
 
 <style>
     body {
-        background-image: url('../img/The_Dark_Forest.png');
+        background: url('../img/forest-background-2.jpg') no-repeat center;
+
     }
 
 </style>

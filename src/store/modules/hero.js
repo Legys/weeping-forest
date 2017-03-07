@@ -1,10 +1,10 @@
 
 const state = {
 	hero: {
-		name: 'Yobiy',
-		hp: 150,
+		name: 'y',
+		hp: 100,
 		damage: 15,
-		currentHp: 150,
+		currentHp: 63,
 		exp: 1,
 		levelUpExp: 1000,
 		lvl: 1
@@ -16,12 +16,15 @@ const getters = {
 	}
 }
 const mutations = {
-	'ATTACK'(state, paylod) {
-
+	'ATTACK'({state, rootState}, payload) {
 
 	}
 }
-const actions = {}
+const actions = {
+	attack({state, rootState}, payload) {
+		console.log('root', rootState.enemy.invokedEnemy);
+	}
+}
 
 export default {
 	state,

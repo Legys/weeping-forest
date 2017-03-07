@@ -2,13 +2,13 @@
     <div class="hero">
         <img
                 class="hero__avatar"
-                src="/img/avatar.png"
+                src="/img/avatar2.png"
              :alt="hero.name">
         <h2 class="hero__name"> {{ hero.name }}</h2>
       <app-progress-bar :maxHp="hero.hp" :currentHp="hero.currentHp"></app-progress-bar>
-        <p>HP: {{ hero.hp }}</p>
-        <p>LVL: {{ hero.lvl }}</p>
-        <p>EXP: {{ hero.exp }}</p>
+        <p class="hero__stats">HP: {{ hero.hp }}</p>
+           <p class="hero__stats">LVL: {{ hero.lvl }}</p>
+           <p class="hero__stats">EXP: {{ hero.exp }}</p>
     </div>
 </template>
 
@@ -36,27 +36,41 @@
     .hero {
         width: 300px;
         min-height: 300px;
-        background: #065276;
+        background: #064;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
         align-items: center;
+        border-radius: 5px;
         &__avatar {
             width: 50px;
             height: 100px;
         }
          &__name {
         margin: 0;
+        margin-bottom: 10px;
         color: white;
         font-size: 32px;
           }
     }
+    .hero__avatar {
+        margin-top: 15px;
+        width: 150px;
+        min-height: 150px;
+        border-radius: 5px;
+        border: 2px solid lightgoldenrodyellow;
+    }
+    .hero__stats {
+        margin: 0;
+        margin-top: 10px;
+    }
     .hero__progress--hp {
+        margin: 0 auto;
+
         width: 100%;
         height: 25px;
         border-radius: 5px;
         background-color: transparent;
-        margin: auto;
         transition: width 500ms;
     }
     .hero__progress--dynamic {
