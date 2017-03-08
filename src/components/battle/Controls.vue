@@ -10,15 +10,10 @@
     export default {
         methods: {
         	attack() {
-        		let damage = this.$store.getters.hero.damage;
-        		let enemy = {
-                  ...this.$store.getters.enemy
-                }
-                enemy.currentHp -= damage;
-        		console.log(enemy);
-                /*this.$store.dispatch('attack', damage);*/
-//                console.log(enemy.name, enemy.currentHp);
-
+        		let heroDamage = this.$store.getters.hero.damage;
+        		let enemyDamage = this.$store.getters.enemy.attack;
+        	    this.$store.dispatch('takeEnemyDamage', heroDamage);
+                this.$store.dispatch('takeHeroDamage', enemyDamage);
             }
         }
     }

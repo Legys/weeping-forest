@@ -26,6 +26,9 @@ const getters = {
 const mutations = {
 	'INVOKE_ENEMY' (state, payload) {
 		state.invokedEnemy = payload;
+	},
+	'SUBTRACT_ENEMY_HP'(state, payload) {
+		state.invokedEnemy.currentHp -= payload;
 	}
 }
 const actions = {
@@ -50,8 +53,15 @@ const actions = {
 			...enemy[commonPick],
 			currentHp: enemy[commonPick].hp
 		}
-		console.log('seq', newEnemy);
+	/*	console.log('seq', newEnemy);*/
 		commit('INVOKE_ENEMY', newEnemy);
+	},
+	takeEnemyDamage({commit, state}, payload) {
+		commit('SUBTRACT_ENEMY_HP', payload);
+		// refactor this
+		if (state.invokedEnemy.currentHp - payload <= 0) {
+			commit('GAIN_EXP', state.invokedEnemy.exp);
+		}
 	}
 }
 
