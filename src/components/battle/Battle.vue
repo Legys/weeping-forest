@@ -9,7 +9,15 @@
                     class="enemy__image"
                     :src="enemy.img"
                     alt="enemy.name">
-            <app-progress-bar :maxHp="enemy.hp" :currentHp="enemy.currentHp"></app-progress-bar>
+            <app-progress-bar
+                    :maxHp="enemy.hp"
+                    :currentHp="enemy.currentHp"
+                    v-if="enemy.currentHp >= 0">
+
+            </app-progress-bar>
+            <span
+                    class="status"
+                    v-else>Dead</span>
         </div>
     </div>
 </template>

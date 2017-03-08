@@ -29,6 +29,9 @@ const mutations = {
 	},
 	'SUBTRACT_ENEMY_HP'(state, payload) {
 		state.invokedEnemy.currentHp -= payload;
+	},
+	'SET_ENEMY_ALIVE'(state, payload) {
+		state.invokedEnemy.isAlive = payload;
 	}
 }
 const actions = {
@@ -51,17 +54,27 @@ const actions = {
 		 console.log(`${zero} - zero : ${one} - one : ${two} - two`);*/
 		const newEnemy = {
 			...enemy[commonPick],
-			currentHp: enemy[commonPick].hp
+			currentHp: enemy[commonPick].hp,
+			isAlive: true
 		}
 	/*	console.log('seq', newEnemy);*/
 		commit('INVOKE_ENEMY', newEnemy);
 	},
-	takeEnemyDamage({commit, state}, payload) {
-		commit('SUBTRACT_ENEMY_HP', payload);
-		// refactor this
-		if (state.invokedEnemy.currentHp - payload <= 0) {
-			commit('GAIN_EXP', state.invokedEnemy.exp);
+	takeEnemyDamage({commit, state, dispatch, rootState}, payload) {
+		//warn
+		if (rootState.hero.hero.isAlive) {
+			commit('SUBTRACT_ENEMY_HP', payload);
+		} else {
+			console.log('you are', rootState.hero.hero.isAlive);
 		}
+
+		// refactor this
+		if (state.invokedEnemy.currentHp <= 0) {
+		 dispatch('defeatEnemy');
+		 }
+	},
+	defeatEnemy({commit, state}, payload) {
+		commit('GAIN_EXP', state.invokedEnemy.exp);
 	}
 }
 

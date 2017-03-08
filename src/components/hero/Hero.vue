@@ -5,7 +5,15 @@
                 src="/img/avatar2.png"
              :alt="hero.name">
         <h2 class="hero__name"> {{ hero.name }}</h2>
-      <app-progress-bar :maxHp="hero.hp" :currentHp="hero.currentHp"></app-progress-bar>
+      <app-progress-bar
+              v-if="hero.currentHp >= 0"
+              :maxHp="hero.hp"
+              :currentHp="hero.currentHp">
+
+      </app-progress-bar>
+        <span
+        class="status"
+        v-if="hero.currentHp <= 0">Wasted</span>
         <ul class="hero__stats__list">
             <li class="hero__stats__item"> HP: {{ hero.hp }}</li>
             <li class="hero__stats__item"> LVL: {{ hero.lvl }}</li>
@@ -94,5 +102,11 @@
     .hero__hp--number {
         padding-top: 4px;
         display: block;
+    }
+    .status {
+        font-size: 18px;
+        margin: 0 auto;
+        text-align: center;
+        color: white;
     }
 </style>

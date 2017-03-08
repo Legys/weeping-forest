@@ -1,9 +1,11 @@
 <template>
     <div class="hero__progress--hp">
-        <div class="hero__progress--dynamic
+        <div
+             v-if="this.currentHp > 0"
+             class="hero__progress--dynamic
                         hero__progress--hp"
              :style="{width: progressHp}">
-            <span class="hero__hp--number">{{ currentHp }} HP</span>
+            <span  class="hero__hp--number">{{ currentHp }} HP</span>
 
         </div>
     </div>
@@ -37,4 +39,5 @@
     .hero__progress--hp {
         width: 100%;
     }
+
 </style>

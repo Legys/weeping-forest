@@ -3,7 +3,8 @@ const state = {
 	hero: {
 		name: 'y',
 		hp: 100,
-		damage: 15,
+		isAlive: true,
+		damage: 45,
 		currentHp: 85,
 		exp: 1,
 		levelUpExp: 1000,
@@ -30,13 +31,20 @@ const mutations = {
 	},
 	'GAIN_EXP'(state, payload) {
 		state.hero.exp += payload;
+	},
+	'SET_HERO_ALIVE'(state, payload) {
+		state.hero.isAlive = payload;
 	}
 }
 const actions = {
 	/*attackEnemy({state, rootState}, payload) {
 		rootState.enemy.invokedEnemy.currentHp -= payload;
 	},*/
-	takeHeroDamage({commit}, payload) {
+	takeHeroDamage({commit, state}, payload) {
+		// warn
+		if (state.hero.currentHp <= 0) {
+			commit('SET_HERO_ALIVE', false);
+		}
 		commit('SUBTRACT_HERO_HP', payload)
 	},
 	healHero({commit, state}, payload) {
