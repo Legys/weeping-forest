@@ -12,7 +12,7 @@
             <app-progress-bar
                     :maxHp="enemy.hp"
                     :currentHp="enemy.currentHp"
-                    v-if="enemy.currentHp >= 0">
+                    v-if="enemy.currentHp > 0">
 
             </app-progress-bar>
             <span

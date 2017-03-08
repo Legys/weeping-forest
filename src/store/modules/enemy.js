@@ -32,6 +32,9 @@ const mutations = {
 	},
 	'SET_ENEMY_ALIVE'(state, payload) {
 		state.invokedEnemy.isAlive = payload;
+	},
+	'SET_ENEMY_HP'(state, payload) {
+		state.invokedEnemy.currentHp = payload;
 	}
 }
 const actions = {
@@ -62,18 +65,22 @@ const actions = {
 	},
 	takeEnemyDamage({commit, state, dispatch, rootState}, payload) {
 		//warn
-		if (rootState.hero.hero.isAlive) {
+
+
+		if (state.invokedEnemy.isAlive && rootState.hero.hero.isAlive) {
 			commit('SUBTRACT_ENEMY_HP', payload);
+			if (state.invokedEnemy.currentHp <= 0) {
+				dispatch('defeatEnemy');
+			}
 		} else {
 			console.log('you are', rootState.hero.hero.isAlive);
 		}
-
 		// refactor this
-		if (state.invokedEnemy.currentHp <= 0) {
-		 dispatch('defeatEnemy');
-		 }
+
 	},
 	defeatEnemy({commit, state}, payload) {
+		commit('SET_ENEMY_HP', 0);
+		commit('SET_ENEMY_ALIVE', false);
 		commit('GAIN_EXP', state.invokedEnemy.exp);
 	}
 }

@@ -17,9 +17,6 @@ const getters = {
 	}
 }
 const mutations = {
-	'ATTACK'({state, rootState}, payload) {
-
-	},
 	'SUBTRACT_HERO_HP'(state, payload) {
 		state.hero.currentHp -= payload;
 	},
@@ -34,23 +31,39 @@ const mutations = {
 	},
 	'SET_HERO_ALIVE'(state, payload) {
 		state.hero.isAlive = payload;
+	},
+	'SET_HERO_HP'(state, payload) {
+		state.hero.currentHp = payload;
 	}
 }
 const actions = {
 	/*attackEnemy({state, rootState}, payload) {
 		rootState.enemy.invokedEnemy.currentHp -= payload;
 	},*/
-	takeHeroDamage({commit, state}, payload) {
+	takeHeroDamage({commit, state, rootState}, payload) {
 		// warn
-		if (state.hero.currentHp <= 0) {
-			commit('SET_HERO_ALIVE', false);
+		if (state.hero.isAlive && rootState.enemy.invokedEnemy.isAlive) {
+			commit('SUBTRACT_HERO_HP', payload);
+
+			if (state.hero.currentHp <= 0 ) {
+				commit('SET_HERO_ALIVE', false);
+				commit('SET_HERO_HP', 0)
+			}
+		} else {
+			console.log('nothing to do here')
 		}
-		commit('SUBTRACT_HERO_HP', payload)
 	},
 	healHero({commit, state}, payload) {
+		// multiple 'HEAL_HERO'
 		const current = state.hero.currentHp,
 					max = state.hero.hp;
-		if ( current + payload > max) {
+
+		if (!state.hero.isAlive) {
+
+			commit('SET_HERO_ALIVE', true);
+			commit('HEAL_HERO', payload)
+
+		} else if ( current + payload > max) {
 			console.log('idi hanuy))');
 			commit('REFILL_ALL_HP')
 		} else {

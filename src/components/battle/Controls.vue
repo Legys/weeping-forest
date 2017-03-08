@@ -2,12 +2,25 @@
     <div class="controls">
         <button
                 class="controls__attack"
+                :disable="canAttack"
                 @click="attack">ATTACK!</button>
     </div>
 </template>
 
 <script>
+    import {mapState} from 'vuex';
     export default {
+    	data() {
+    		return {
+              ...mapState(["hero", "enemy"]),
+
+            }
+        },
+    	computed: {
+            canAttack() {
+            // here
+            }
+        },
         methods: {
         	attack() {
         		let heroDamage = this.$store.getters.hero.damage;
