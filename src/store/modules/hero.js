@@ -5,10 +5,16 @@ const state = {
 		hp: 100,
 		isAlive: true,
 		damage: 45,
-		currentHp: 85,
+		currentHp: 100,
 		exp: 1,
 		levelUpExp: 1000,
-		lvl: 1
+		lvl: 1,
+		skills: [
+			{ title: 'commonAttack', type: 'blast'},
+			{ title: 'specialAttack', type: 'blast' },
+			{ title: 'poisonedAttack', type: 'dot' },
+			{ title: 'healMe', type: 'dot' },
+		]
 	}
 };
 const getters = {
@@ -52,6 +58,36 @@ const actions = {
 		} else {
 			console.log('nothing to do here')
 		}
+	},
+	commonAttack({state, commit, dispatch}, payload) {
+			const damage = state.hero.damage;
+			dispatch('takeEnemyDamage', damage);
+	},
+	specialAttack({state, commit, dispatch}, payload) {
+		dispatch('takeEnemyDamage', state.hero.damage * 2);
+	},
+	poisonedAttack({state, rootState, dispatch, commit}, payload) {
+		const turnsStamp = rootState.gameloop.turns;
+
+		commit('STACK_ADD', {
+			turn: turnsStamp + 2,
+			act: 'takeEnemyDamage',
+			effect: state.hero.damage * 0.5
+		});
+		commit('STACK_ADD', {
+			turn: turnsStamp + 4,
+			act: 'takeEnemyDamage',
+			effect: state.hero.damage * 1.5
+		});
+	},
+	healMe({state, commit, rootState}, payload) {
+		const turnsStamp = rootState.gameloop.turns;
+
+		commit('STACK_ADD', {
+			turn: turnsStamp + 1,
+			act: 'healHero',
+			effect: 30
+		});
 	},
 	healHero({commit, state}, payload) {
 		// multiple 'HEAL_HERO'

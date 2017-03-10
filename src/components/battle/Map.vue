@@ -4,12 +4,12 @@
             <ul class="list">
                 <router-link
                         class="way"
-                        v-for="(n, i) in 3"
+                        v-for="(location, i) in locations"
                         :to="{path: `battle/${i}`, params: { id: i} }"
                         :key="i"
                         append
 
-                >{{ n }}</router-link>
+                >{{ i+1 }}</router-link>
 
             </ul>
         </div>
@@ -22,7 +22,7 @@
 	export default {
         data() {
         	return {
-        		enemies: this.$store.getters.enemy
+        		locations: this.$store.getters.locations
             }
         }
 
@@ -74,6 +74,10 @@
          }
          &:nth-child(3) {
               top: 163px;
+              left: 238px;
+         }
+         &:nth-child(4) {
+              top: 263px;
               left: 238px;
          }
 

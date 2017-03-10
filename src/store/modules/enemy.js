@@ -1,17 +1,20 @@
 const state = {
 	enemy: [
 		[
-			{ id: 1, name: 'Spider', hp: 100, attack: 10, exp: 100, img: '../../../img/forest_spider.png'},
-			{ id: 2, name: 'Spiders', hp: 120, attack: 40, exp: 260, img: 'https://s-media-cache-ak0.pinimg.com/originals/ab/df/0f/abdf0f6bfc68dc65ea0e5fccfb10eab5.jpg'},
-			{ id: 3, name: 'Hornet', hp: 70, attack: 15, exp: 140, img: 'http://227rsi2stdr53e3wto2skssd7xe.wpengine.netdna-cdn.com/wp-content/uploads/2014/09/hornet-queen-621x280.png'},
+			{ id: 1, name: 'Spider', hp: 100, damage: 10, exp: 100, img: '../../../img/forest_spider.png'},
+			{ id: 2, name: 'Spiders', hp: 120, damage: 40, exp: 260, img: 'https://s-media-cache-ak0.pinimg.com/originals/ab/df/0f/abdf0f6bfc68dc65ea0e5fccfb10eab5.jpg'},
+			{ id: 3, name: 'Hornet', hp: 70, damage: 15, exp: 140, img: 'http://227rsi2stdr53e3wto2skssd7xe.wpengine.netdna-cdn.com/wp-content/uploads/2014/09/hornet-queen-621x280.png'},
 		],
 		[
-			{ id: 4, name: 'Gnoll', hp: 70, attack: 35, exp: 200, img: 'http://vignette3.wikia.nocookie.net/wowwiki/images/7/76/Hogger_art.jpg/revision/latest?cb=20070901143234'},
-			{ id: 5, name: 'Wolf', hp: 250, attack: 40, exp: 300, img: 'http://zhurnal.lib.ru/img/l/lagosta_d_w/01-1/warg.jpg'},
+			{ id: 4, name: 'Gnoll', hp: 70, damage: 35, exp: 200, img: 'http://vignette3.wikia.nocookie.net/wowwiki/images/7/76/Hogger_art.jpg/revision/latest?cb=20070901143234'},
+			{ id: 5, name: 'Wolf', hp: 250, damage: 40, exp: 300, img: 'http://zhurnal.lib.ru/img/l/lagosta_d_w/01-1/warg.jpg'},
 		],
 		[
-			{ id: 6, name: 'Wolf', hp: 250, attack: 40, exp: 300, img: 'http://zhurnal.lib.ru/img/l/lagosta_d_w/01-1/warg.jpg'},
-		]
+			{ id: 6, name: 'Wolf', hp: 250, damage: 40, exp: 300, img: 'http://zhurnal.lib.ru/img/l/lagosta_d_w/01-1/warg.jpg'},
+		],
+		[
+			{ id: 7, name: 'Troll', hp: 1500, damage: 5, exp: 300, img: '../../../img/forest-troll.jpg'},
+		],
 	],
 	invokedEnemy: {
 
@@ -21,6 +24,9 @@ const state = {
 const getters = {
 	enemy(state) {
 		return state.invokedEnemy;
+	},
+	locations(state) {
+		return state.enemy.length;
 	}
 }
 const mutations = {
@@ -65,24 +71,28 @@ const actions = {
 	},
 	takeEnemyDamage({commit, state, dispatch, rootState}, payload) {
 		//warn
+		console.log(payload);
+		const hero = rootState.hero.hero,
+					enemy = state.invokedEnemy;
 
-
-		if (state.invokedEnemy.isAlive && rootState.hero.hero.isAlive) {
+		if (enemy.isAlive && hero.isAlive) {
+			console.log(payload);
 			commit('SUBTRACT_ENEMY_HP', payload);
-			if (state.invokedEnemy.currentHp <= 0) {
+
+			if (enemy.currentHp <= 0) {
 				dispatch('defeatEnemy');
 			}
 		} else {
-			console.log('you are', rootState.hero.hero.isAlive);
+			console.log('Attention: takeEnemyDamage"s else was trigger; INFO:', payload);
 		}
+		/*commit('NEXT_TURN');*/
 		// refactor this
-
 	},
 	defeatEnemy({commit, state}, payload) {
 		commit('SET_ENEMY_HP', 0);
 		commit('SET_ENEMY_ALIVE', false);
 		commit('GAIN_EXP', state.invokedEnemy.exp);
-	}
+	},
 }
 
 export default {

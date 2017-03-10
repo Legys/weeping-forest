@@ -37,7 +37,7 @@
       },
       beforeRouteLeave(to, from, next) {
       	console.log('surrender?');
-
+        this.$store.commit('CLOSE_LOOP')
       	next();
       },
       components: {
