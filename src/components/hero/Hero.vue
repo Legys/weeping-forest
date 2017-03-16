@@ -20,7 +20,16 @@
             <li class="hero__stats__item"> LVL: {{ hero.lvl }}</li>
             <li class="hero__stats__item"> EXP: {{ hero.exp }}</li>
         </ul>
-
+        <div class="hero__lvlup" v-if="canGrowStats">
+            <span v-if="notEnoughStats">Choose more stats ({{ 5 - incrCounts }})</span>
+            <button @click="incrAttack"
+                    :disabled="incrCounts >= 5">Attack++</button>
+           + {{ attack }}
+            <button @click="incrHp"
+                    :disabled="incrCounts >= 5">HP++</button>
+           + {{ hp }}
+            <button @click="submitStats">OK</button>
+        </div>
 
 
     </div>
@@ -32,13 +41,43 @@
     export default {
         data() {
         	return {
-
+                attack: 0,
+                hp: 0,
+                incrCounts: 0,
+                notEnoughStats: false
             }
         },
+      methods: {
+        incrAttack() {
+          this.incrCounts++;
+          this.attack += 5;
+        },
+        incrHp() {
+          this.incrCounts++;
+          this.hp += 40;
+        },
+        submitStats() {
+        	if (this.incrCounts === 5) {
+              this.$store.dispatch('afterNewLvl', {
+                attack: this.attack,
+                hp: this.hp
+              })
+              this.attack = 0;
+              this.hp = 0;
+              this.incrCounts = 0;
+              this.notEnoughStats = false;
+            } else {
+        		this.notEnoughStats = true;
+            }
+
+        }
+      },
       computed: {
         ...mapGetters({
-          hero: 'hero'
-        })
+          hero: 'hero',
+          canGrowStats: 'canGrowStats'
+        }),
+
       },
       components: {
         appProgressBar: ProgressBar
@@ -109,5 +148,14 @@
         margin: 0 auto;
         text-align: center;
         color: white;
+    }
+    .hero__lvlup {
+        button {
+            cursor: pointer;
+        }
+        button:disabled {
+            cursor: not-allowed;
+        }
+
     }
 </style>

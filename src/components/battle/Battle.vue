@@ -15,10 +15,14 @@
                     v-if="enemy.currentHp > 0">
 
             </app-progress-bar>
-            <span
-                    class="status"
-                    v-else>Dead</span>
+            <div v-else>
+                 <span
+                         class="status">Dead</span>
+                <button @click="newEnemy">New enemy</button>
+            </div>
+
         </div>
+
     </div>
 </template>
 
@@ -30,6 +34,12 @@
       computed: {
         enemy() {
           return this.$store.getters.enemy;
+        }
+      },
+      methods: {
+      	newEnemy() {
+      		this.$store.dispatch('closeGameLoop');
+      		this.$store.dispatch('randomizeEnemy', +this.$route.params.id);
         }
       },
       created() {

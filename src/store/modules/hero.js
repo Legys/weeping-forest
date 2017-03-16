@@ -8,6 +8,7 @@ const state = {
 		currentHp: 100,
 		exp: 1,
 		levelUpExp: 1000,
+		canGrowStats: false,
 		lvl: 1,
 		skills: [
 			{ title: 'commonAttack', type: 'blast'},
@@ -22,11 +23,17 @@ const state = {
 const getters = {
 	hero(state, getters, rootState) {
 		return state.hero;
+	},
+	canGrowStats(state) {
+		return state.hero.canGrowStats;
 	}
 }
 const mutations = {
 	'SUBTRACT_HERO_HP'(state, payload) {
 		state.hero.currentHp -= payload;
+	},
+	'INCREASE_MAX_HP'(state, payload) {
+		state.hero.hp += payload;
 	},
 	'HEAL_HERO'(state, payload) {
 		state.hero.currentHp += payload;
@@ -37,6 +44,19 @@ const mutations = {
 	'GAIN_EXP'(state, payload) {
 		state.hero.exp += payload;
 	},
+	'RESET_EXP'(state) {
+		state.hero.exp = 0;
+	},
+	'INCREASE_EXP_TO_LVL'(state, payload) {
+		state.hero.levelUpExp += payload;
+	},
+	'LEVEL_UP'(state, payload) {
+		state.hero.lvl++;
+	},
+	'STATS_GROW'(state, payload) {
+		state.hero.canGrowStats = payload;
+	}
+	,
 	'SET_HERO_ALIVE'(state, payload) {
 		state.hero.isAlive = payload;
 	},
@@ -113,26 +133,38 @@ const actions = {
 	decreaseHeroDamage({state, commit, rootState }, payload) {
 	 commit('DECREASE_HERO_DAMAGE', payload);
 	},
-
-	passTurn({state, commit}, payload) {
-
-	},
 	healHero({commit, state}, payload) {
 		// multiple 'HEAL_HERO'
 		const current = state.hero.currentHp,
-					max = state.hero.hp;
+			max = state.hero.hp;
 
 		if (!state.hero.isAlive) {
 
 			commit('SET_HERO_ALIVE', true);
 			commit('HEAL_HERO', payload)
 
-		} else if ( current + payload > max) {
+		} else if (current + payload > max) {
 			console.log('idi hanuy))');
 			commit('REFILL_ALL_HP')
 		} else {
 			commit('HEAL_HERO', payload)
 		}
+	},
+	levelUp({state, commit}, payload) {
+		commit('LEVEL_UP');
+		commit('STATS_GROW', true);
+		commit('RESET_EXP');
+		commit('INCREASE_EXP_TO_LVL', 1000);
+	},
+	afterNewLvl({state, commit}, payload) {
+		if (payload.attack > 0) {
+			commit('INCREASE_HERO_DAMAGE', payload.attack);
+		}
+		if (payload.hp > 0) {
+			commit('INCREASE_MAX_HP', payload.hp);
+			commit('REFILL_ALL_HP', payload.hp);
+		}
+		commit('STATS_GROW', false);
 	}
 }
 
