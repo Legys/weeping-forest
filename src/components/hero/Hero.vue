@@ -16,6 +16,7 @@
         v-if="hero.currentHp <= 0">Wasted</span>
         <ul class="hero__stats__list">
             <li class="hero__stats__item"> HP: {{ hero.hp }}</li>
+            <li class="hero__stats__item"> Damage {{ hero.damage }}</li>
             <li class="hero__stats__item"> LVL: {{ hero.lvl }}</li>
             <li class="hero__stats__item"> EXP: {{ hero.exp }}</li>
         </ul>

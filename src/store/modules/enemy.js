@@ -66,17 +66,14 @@ const actions = {
 			currentHp: enemy[commonPick].hp,
 			isAlive: true
 		}
-	/*	console.log('seq', newEnemy);*/
 		commit('INVOKE_ENEMY', newEnemy);
 	},
 	takeEnemyDamage({commit, state, dispatch, rootState}, payload) {
 		//warn
-		console.log(payload);
 		const hero = rootState.hero.hero,
 					enemy = state.invokedEnemy;
 
 		if (enemy.isAlive && hero.isAlive) {
-			console.log(payload);
 			commit('SUBTRACT_ENEMY_HP', payload);
 
 			if (enemy.currentHp <= 0) {

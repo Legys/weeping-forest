@@ -4,7 +4,7 @@ const state = {
 		name: 'y',
 		hp: 100,
 		isAlive: true,
-		damage: 45,
+		damage: 100,
 		currentHp: 100,
 		exp: 1,
 		levelUpExp: 1000,
@@ -14,6 +14,8 @@ const state = {
 			{ title: 'specialAttack', type: 'blast' },
 			{ title: 'poisonedAttack', type: 'dot' },
 			{ title: 'healMe', type: 'dot' },
+			{ title: 'increaseAttack', type: 'buff' },
+			{ title: 'passTurn', type: 'dot' },
 		]
 	}
 };
@@ -40,6 +42,12 @@ const mutations = {
 	},
 	'SET_HERO_HP'(state, payload) {
 		state.hero.currentHp = payload;
+	},
+	'INCREASE_HERO_DAMAGE'(state, payload) {
+		state.hero.damage += payload;
+	},
+	'DECREASE_HERO_DAMAGE'(state, payload) {
+		state.hero.damage -= payload;
 	}
 }
 const actions = {
@@ -74,6 +82,7 @@ const actions = {
 			act: 'takeEnemyDamage',
 			effect: state.hero.damage * 0.5
 		});
+
 		commit('STACK_ADD', {
 			turn: turnsStamp + 4,
 			act: 'takeEnemyDamage',
@@ -88,6 +97,25 @@ const actions = {
 			act: 'healHero',
 			effect: 30
 		});
+	},
+
+	increaseAttack({state, commit, rootState }, payload) {
+		const damageBuff = 100;
+		const turnsStamp = rootState.gameloop.turns;
+
+		commit('INCREASE_HERO_DAMAGE', damageBuff);
+		commit('STACK_ADD', {
+			turn: turnsStamp + 2,
+			act: 'decreaseHeroDamage',
+			effect: damageBuff
+		});
+	},
+	decreaseHeroDamage({state, commit, rootState }, payload) {
+	 commit('DECREASE_HERO_DAMAGE', payload);
+	},
+
+	passTurn({state, commit}, payload) {
+
 	},
 	healHero({commit, state}, payload) {
 		// multiple 'HEAL_HERO'

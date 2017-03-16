@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
     export default {
     	props: {
     		maxHp: {
@@ -29,7 +28,8 @@
         },
       computed: {
         progressHp() {
-          return (Math.round( 100 * this.currentHp) / this.maxHp) + '%';
+          return (
+          	Math.round(100 * this.currentHp) / this.maxHp) + '%';
         }
       }
     }

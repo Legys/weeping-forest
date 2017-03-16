@@ -13,36 +13,32 @@ const mutations = {
 		state.turns = 0;
 		state.stacks = [];
 	}
-	/*'SET_TURNS'(state, payload) {
-	 state.turns = payload;
-	 },*/
-	/*'TICK_TURN'(state, payload) {
-	 state.turns -= payload;
-	 }*/
 }
 const actions = {
 	gameLoop({state, commit, dispatch, rootState}, payload) {
 
-			state.stacks.forEach((elem, i) => {
-				if (state.turns === state.stacks[i].turn) {
-					dispatch(state.stacks[i].act, state.stacks[i].effect);
-				}
-			});
-			switch (payload.type) {
-			case 'blast': {
-				dispatch(payload.title);
-				dispatch('takeHeroDamage', rootState.enemy.invokedEnemy.damage);
-				commit('NEXT_TURN');
+		state.stacks.forEach((elem, i) => {
+			if (state.turns === state.stacks[i].turn) {
+				dispatch(state.stacks[i].act, state.stacks[i].effect);
 			}
-			case 'dot': {
-				dispatch(payload.title);
-				dispatch('takeHeroDamage', rootState.enemy.invokedEnemy.damage);
-				commit('NEXT_TURN');
-			}
-		}
-	},
-	closeGameLoop({state}, payload) {
+		});
+		/*	state.stacks.forEach((elem, i) => {
+				dispatch(state.stacks[i].act, state.stacks[i].effect);
+			});*/
 
+		dispatch(payload.title);
+		dispatch('takeHeroDamage', rootState.enemy.invokedEnemy.damage);
+		commit('NEXT_TURN');
+	},
+	closeGameLoop({state, dispatch, commit}, payload) {
+		//warn
+		//cast all  lasts stacks
+		state.stacks.forEach((elem, i) => {
+			if (state.turns <= state.stacks[i].turn) {
+				dispatch(state.stacks[i].act, state.stacks[i].effect);
+			}
+		});
+		commit('CLOSE_LOOP');
 	}
 }
 export default {
