@@ -11,8 +11,8 @@
         <img class="inventory__icon"
              :src="item.img"
              :alt="item.name">
-        <span   class="item__amounts"
-                v-if="item.amounts > 0">{{item.amounts}}</span>
+        <span   class="item__amount"
+                v-if="item.amount > 1">{{item.amount}}</span>
       </li>
 
     </ul>
@@ -67,12 +67,12 @@ export default {
     width: 50px;
     height: 50px;
   }
-  .item__amounts {
+  .item__amount {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
-    color: blue;
-    font-size: 14px;
+    top: 5px;
+    left: 5px;
+    color: black;
+    font-size: 18px;
     font-weight: bold;
   }
 </style>

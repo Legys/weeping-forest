@@ -80,6 +80,18 @@
               top: 263px;
               left: 238px;
          }
+         &:nth-child(5) {
+              top: 0;
+              left: 0;
+         }
+         &:nth-child(6) {
+              top: 341px;
+              left: 311px;
+         }
+         &:nth-child(7) {
+            top: 172px;
+            left: 85px;
+         }
 
     }
 
