@@ -118,11 +118,10 @@ const actions = {
 	takeEnemyDamage({commit, state, dispatch, rootState}, payload) {
 		//warn
 		const hero = rootState.hero.hero,
-					enemy = state.invokedEnemy;
+			  enemy = state.invokedEnemy;
 
 		if (enemy.isAlive && hero.isAlive) {
 			commit('SUBTRACT_ENEMY_HP', payload);
-
 			if (enemy.currentHp <= 0) {
 				dispatch('defeatEnemy');
 			}

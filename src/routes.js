@@ -1,4 +1,4 @@
-import Login from './components/Login.vue';
+import Auth from './components/auth/Auth.vue';
 import Home from './components/Home.vue';
 import Rest from './components/rest/Rest.vue';
 
@@ -11,7 +11,7 @@ import Inventory from './components/inventory/Inventory.vue';
 
 
 export const routes = [
-    { path: '/login', component: Login },
+    { path: '/', component: Auth },
     { path: '/home', component: Home, 
         children: [
         { path: 'rest', component: Rest},
